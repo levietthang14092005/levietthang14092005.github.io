@@ -1,0 +1,880 @@
+[homepage.html](https://github.com/user-attachments/files/33752041/homepage.html)
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lê Việt Thắng | Developer Portfolio & Game Arcade</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            700: '#0e7490',
+                            900: '#164e63',
+                        },
+                        arcade: {
+                            neon: '#00ffcc',
+                            purple: '#a855f7',
+                            pink: '#ec4899',
+                            dark: '#0f172a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .arcade-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+        .dark .arcade-grid {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+        .game-canvas {
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#hero" class="flex items-center space-x-2 text-xl font-bold font-mono text-cyan-600 dark:text-cyan-400 group">
+                <span class="text-slate-400 group-hover:text-cyan-500 transition-colors">&lt;</span>
+                <span>Việt Thắng</span>
+                <span class="text-cyan-500">/&gt;</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <a href="#about" class="hover:text-cyan-500 transition-colors">About</a>
+                <a href="#skills" class="hover:text-cyan-500 transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-cyan-500 transition-colors">Projects</a>
+                <a href="#arcade" class="px-3 py-1.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 hover:bg-cyan-500 hover:text-white transition-all flex items-center gap-2">
+                    <i class="fa-solid font-bold fa-gamepad animate-pulse"></i> Game Arcade
+                </a>
+                <a href="#contact" class="hover:text-cyan-500 transition-colors">Contact</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <!-- Theme Toggle Button -->
+                <button id="themeToggle" class="p-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:ring-2 hover:ring-cyan-500 transition-all" aria-label="Toggle Theme">
+                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 focus:outline-none">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-3">
+            <a href="#about" class="block py-2 text-slate-700 dark:text-slate-300 hover:text-cyan-500">About</a>
+            <a href="#skills" class="block py-2 text-slate-700 dark:text-slate-300 hover:text-cyan-500">Skills</a>
+            <a href="#projects" class="block py-2 text-slate-700 dark:text-slate-300 hover:text-cyan-500">Projects</a>
+            <a href="#arcade" class="block py-2 text-cyan-600 dark:text-cyan-400 font-semibold"><i class="fa-solid fa-gamepad mr-2"></i>Game Arcade</a>
+            <a href="#contact" class="block py-2 text-slate-700 dark:text-slate-300 hover:text-cyan-500">Contact</a>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section id="hero" class="relative py-20 lg:py-32 overflow-hidden flex items-center arcade-grid">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
+                            <span class="w-2 h-2 rounded-full bg-cyan-500 animate-ping"></span>
+                            <span>Available for new projects</span>
+                        </div>
+                        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">
+                            Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 dark:from-cyan-400 dark:to-indigo-400">Lê Việt Thắng</span>
+                        </h1>
+                        <p class="text-xl font-mono text-cyan-600 dark:text-cyan-400">Web Developer & Game Enthusiast</p>
+                        <p class="text-slate-600 dark:text-slate-400 max-w-2xl text-base sm:text-lg leading-relaxed mx-auto lg:mx-0">
+                            Passionate about crafting clean web applications, creative interactive user experiences, and lightweight browser games. Welcome to my personal hub!
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-4">
+                            <a href="#arcade" class="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 text-white font-semibold shadow-lg shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                                <i class="fa-solid fa-play"></i> Play Arcade Games
+                            </a>
+                            <a href="#contact" class="px-6 py-3 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> Get In Touch
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Profile Image / Interactive Card -->
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div class="relative group w-64 h-64 sm:w-80 sm:h-80">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-3xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                            <div class="relative w-full h-full rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center p-6 text-center">
+                                <div class="w-32 h-32 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 p-1 mb-4">
+                                    <div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-4xl text-cyan-400 font-mono font-bold">
+                                        VT
+                                    </div>
+                                </div>
+                                <h3 class="font-bold text-xl">Lê Việt Thắng</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 font-mono">@levietthang14092005</p>
+                                <div class="mt-4 flex space-x-3 text-slate-600 dark:text-slate-400">
+                                    <a href="https://github.com/levietthang14092005" target="_blank" class="hover:text-cyan-500 transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+                                    <a href="#" class="hover:text-cyan-500 transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
+                                    <a href="#arcade" class="hover:text-cyan-500 transition-colors"><i class="fa-solid fa-gamepad text-xl"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 bg-white dark:bg-slate-900/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight">About Me</h2>
+                    <div class="w-12 h-1 bg-cyan-500 mx-auto mt-2 rounded-full"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Web Development</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            Building clean, performant HTML5, CSS, and JavaScript applications with responsive design frameworks.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Game Design</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            Experimenting with HTML5 Canvas, lightweight JavaScript game loops, and retro gameplay mechanics.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Continuous Learning</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            Always learning modern front-end technologies, state management, and UI/UX best practices.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight">Skills & Tools</h2>
+                    <div class="w-12 h-1 bg-cyan-500 mx-auto mt-2 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-center hover:scale-105 transition-transform border border-slate-200 dark:border-slate-700">
+                        <i class="fa-brands fa-html5 text-3xl text-orange-500 mb-2"></i>
+                        <div class="font-medium text-sm">HTML5</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-center hover:scale-105 transition-transform border border-slate-200 dark:border-slate-700">
+                        <i class="fa-brands fa-css3-alt text-3xl text-blue-500 mb-2"></i>
+                        <div class="font-medium text-sm">CSS3</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-center hover:scale-105 transition-transform border border-slate-200 dark:border-slate-700">
+                        <i class="fa-brands fa-js text-3xl text-yellow-500 mb-2"></i>
+                        <div class="font-medium text-sm">JavaScript</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-center hover:scale-105 transition-transform border border-slate-200 dark:border-slate-700">
+                        <i class="fa-brands fa-git-alt text-3xl text-red-500 mb-2"></i>
+                        <div class="font-medium text-sm">Git & GitHub</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-center hover:scale-105 transition-transform border border-slate-200 dark:border-slate-700">
+                        <i class="fa-solid fa-paint-brush text-3xl text-cyan-400 mb-2"></i>
+                        <div class="font-medium text-sm">Tailwind CSS</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-center hover:scale-105 transition-transform border border-slate-200 dark:border-slate-700">
+                        <i class="fa-solid fa-cubes text-3xl text-purple-400 mb-2"></i>
+                        <div class="font-medium text-sm">Canvas API</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Showcase -->
+        <section id="projects" class="py-16 bg-white dark:bg-slate-900/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight">Featured Projects</h2>
+                    <div class="w-12 h-1 bg-cyan-500 mx-auto mt-2 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Project 1 -->
+                    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 overflow-hidden group hover:border-cyan-500/50 transition-all">
+                        <div class="h-48 bg-gradient-to-br from-cyan-600 to-slate-900 p-6 flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute right-4 bottom-2 text-8xl text-white/10 font-mono font-bold">01</div>
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-mono text-white w-fit">Interactive</span>
+                            <h3 class="text-2xl font-bold text-white z-10">Web Arcade Game Suite</h3>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-slate-600 dark:text-slate-300 text-sm mb-4">
+                                A suite of retro-style JavaScript arcade games built right into the web browser using HTML5 Canvas and native JavaScript state controllers.
+                            </p>
+                            <div class="flex gap-2 mb-4 font-mono text-xs">
+                                <span class="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">HTML5 Canvas</span>
+                                <span class="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">JavaScript</span>
+                            </div>
+                            <a href="#arcade" class="text-cyan-500 font-semibold hover:underline inline-flex items-center gap-1 text-sm">
+                                Launch Arcade <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 overflow-hidden group hover:border-cyan-500/50 transition-all">
+                        <div class="h-48 bg-gradient-to-br from-indigo-600 to-slate-900 p-6 flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute right-4 bottom-2 text-8xl text-white/10 font-mono font-bold">02</div>
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-mono text-white w-fit">Portfolio</span>
+                            <h3 class="text-2xl font-bold text-white z-10">Personal GitHub Space</h3>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-slate-600 dark:text-slate-300 text-sm mb-4">
+                                Lightweight, responsive single-page personal site hosted on GitHub Pages, presenting projects and developer skills with dynamic theme switching.
+                            </p>
+                            <div class="flex gap-2 mb-4 font-mono text-xs">
+                                <span class="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Tailwind CSS</span>
+                                <span class="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">GitHub Pages</span>
+                            </div>
+                            <a href="https://github.com/levietthang14092005" target="_blank" class="text-cyan-500 font-semibold hover:underline inline-flex items-center gap-1 text-sm">
+                                View GitHub <i class="fa-solid fa-external-link text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAME ARCADE SECTION (Embedded Interactive Games) -->
+        <section id="arcade" class="py-20 bg-slate-900 text-white relative overflow-hidden arcade-grid border-y border-cyan-500/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                
+                <div class="text-center max-w-3xl mx-auto mb-10">
+                    <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 font-mono text-xs uppercase tracking-wider">Interactive Zone</span>
+                    <h2 class="text-4xl font-extrabold tracking-tight mt-3 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 neon-glow">
+                        <i class="fa-solid fa-gamepad mr-2"></i> Arcade Module
+                    </h2>
+                    <p class="text-slate-400 text-sm sm:text-base mt-2">
+                        Select a mini-game below and start playing directly in your browser!
+                    </p>
+                </div>
+
+                <!-- Game Selector Tabs -->
+                <div class="flex justify-center mb-8 gap-2 sm:gap-4 flex-wrap">
+                    <button onclick="switchGame('snake')" id="tab-snake" class="game-tab active px-5 py-2.5 rounded-xl font-mono text-sm font-semibold transition-all bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/30 flex items-center gap-2">
+                        <i class="fa-solid fa-worm"></i> Snake Retro
+                    </button>
+                    <button onclick="switchGame('breakout')" id="tab-breakout" class="game-tab px-5 py-2.5 rounded-xl font-mono text-sm font-semibold transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-cubes-stacked"></i> Brick Breaker
+                    </button>
+                    <button onclick="switchGame('memory')" id="tab-memory" class="game-tab px-5 py-2.5 rounded-xl font-mono text-sm font-semibold transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-brain"></i> Memory Match
+                    </button>
+                </div>
+
+                <!-- Game Container Wrapper -->
+                <div class="max-w-xl mx-auto bg-slate-950 border-2 border-cyan-500/40 rounded-2xl p-4 sm:p-6 shadow-2xl relative">
+                    
+                    <!-- SNAKE GAME PANEL -->
+                    <div id="game-snake" class="game-panel block">
+                        <div class="flex justify-between items-center mb-4 font-mono text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="text-slate-400">SCORE:</span>
+                                <span id="snake-score" class="text-cyan-400 text-lg font-bold">0</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-slate-400">HIGH SCORE:</span>
+                                <span id="snake-highscore" class="text-purple-400 text-lg font-bold">0</span>
+                            </div>
+                        </div>
+
+                        <div class="relative flex justify-center bg-slate-900 rounded-lg overflow-hidden border border-slate-800">
+                            <canvas id="snakeCanvas" width="400" height="400" class="w-full max-w-[400px] h-auto game-canvas"></canvas>
+                            
+                            <!-- Start / Game Over Overlay -->
+                            <div id="snake-overlay" class="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center p-6 text-center z-10">
+                                <h3 id="snake-title" class="text-2xl font-bold text-cyan-400 mb-2">Snake Classic</h3>
+                                <p id="snake-desc" class="text-slate-300 text-xs sm:text-sm mb-6">Use Arrow Keys or Screen Buttons to direct the snake.</p>
+                                <button onclick="startSnake()" class="px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold font-mono transition-transform active:scale-95 shadow-lg shadow-cyan-500/40">
+                                    START GAME
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Onscreen Touch Controls for Mobile -->
+                        <div class="mt-4 grid grid-cols-3 gap-2 w-48 mx-auto md:hidden">
+                            <div></div>
+                            <button onclick="handleSnakeDir('UP')" class="p-3 bg-slate-800 active:bg-cyan-500 rounded-lg text-center"><i class="fa-solid fa-arrow-up"></i></button>
+                            <div></div>
+                            <button onclick="handleSnakeDir('LEFT')" class="p-3 bg-slate-800 active:bg-cyan-500 rounded-lg text-center"><i class="fa-solid fa-arrow-left"></i></button>
+                            <button onclick="handleSnakeDir('DOWN')" class="p-3 bg-slate-800 active:bg-cyan-500 rounded-lg text-center"><i class="fa-solid fa-arrow-down"></i></button>
+                            <button onclick="handleSnakeDir('RIGHT')" class="p-3 bg-slate-800 active:bg-cyan-500 rounded-lg text-center"><i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- BRICK BREAKER PANEL -->
+                    <div id="game-breakout" class="game-panel hidden">
+                        <div class="flex justify-between items-center mb-4 font-mono text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="text-slate-400">SCORE:</span>
+                                <span id="breakout-score" class="text-cyan-400 text-lg font-bold">0</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-slate-400">LIVES:</span>
+                                <span id="breakout-lives" class="text-pink-500 text-lg font-bold">3</span>
+                            </div>
+                        </div>
+
+                        <div class="relative flex justify-center bg-slate-900 rounded-lg overflow-hidden border border-slate-800">
+                            <canvas id="breakoutCanvas" width="400" height="400" class="w-full max-w-[400px] h-auto game-canvas"></canvas>
+                            
+                            <div id="breakout-overlay" class="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center p-6 text-center z-10">
+                                <h3 id="breakout-title" class="text-2xl font-bold text-cyan-400 mb-2">Brick Breaker</h3>
+                                <p id="breakout-desc" class="text-slate-300 text-xs sm:text-sm mb-6">Move your paddle to destroy all retro bricks!</p>
+                                <button onclick="startBreakout()" class="px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold font-mono transition-transform active:scale-95 shadow-lg shadow-cyan-500/40">
+                                    START GAME
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Touch controls for Paddle -->
+                        <div class="mt-4 flex justify-between gap-4 md:hidden">
+                            <button id="btn-left" class="flex-1 py-3 bg-slate-800 active:bg-cyan-500 rounded-lg font-bold"><i class="fa-solid fa-arrow-left mr-1"></i> Left</button>
+                            <button id="btn-right" class="flex-1 py-3 bg-slate-800 active:bg-cyan-500 rounded-lg font-bold">Right <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- MEMORY MATCH PANEL -->
+                    <div id="game-memory" class="game-panel hidden">
+                        <div class="flex justify-between items-center mb-4 font-mono text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="text-slate-400">MOVES:</span>
+                                <span id="memory-moves" class="text-cyan-400 text-lg font-bold">0</span>
+                            </div>
+                            <button onclick="initMemoryGame()" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-300">
+                                <i class="fa-solid fa-rotate-right mr-1"></i> Reset
+                            </button>
+                        </div>
+
+                        <div id="memory-grid" class="grid grid-cols-4 gap-3 max-w-[360px] mx-auto min-h-[360px] p-2">
+                            <!-- Cards dynamically injected here -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight">Get In Touch</h2>
+                    <div class="w-12 h-1 bg-cyan-500 mx-auto mt-2 rounded-full"></div>
+                    <p class="text-slate-600 dark:text-slate-400 mt-4 text-sm sm:text-base">
+                        Have a question, proposal, or just want to play a game? Send me a message!
+                    </p>
+                </div>
+
+                <div class="max-w-xl mx-auto bg-slate-100 dark:bg-slate-800/60 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-700">
+                    <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Your Name</label>
+                            <input type="text" required class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Your Email</label>
+                            <input type="email" required class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Message</label>
+                            <textarea rows="4" required class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 text-white font-semibold shadow-lg shadow-cyan-500/25 transition-all">
+                            Send Message
+                        </button>
+                    </form>
+                    <div id="formStatus" class="hidden mt-4 p-3 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm text-center font-medium">
+                        Thank you for your message! I'll get back to you soon.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 py-8 bg-white dark:bg-slate-900 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 text-center sm:flex sm:justify-between sm:items-center">
+            <p class="text-sm text-slate-500 dark:text-slate-400">
+                &copy; <span id="year"></span> Lê Việt Thắng. Built with HTML5 & Tailwind CSS.
+            </p>
+            <div class="flex justify-center space-x-4 mt-4 sm:mt-0 text-slate-400">
+                <a href="https://github.com/levietthang14092005" target="_blank" class="hover:text-cyan-500"><i class="fa-brands fa-github"></i></a>
+                <a href="#hero" class="hover:text-cyan-500"><i class="fa-solid fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- 1. GENERAL UI & THEME TOGGLE ---
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                themeIcon.className = 'fa-solid fa-sun text-lg text-amber-500';
+            } else {
+                document.documentElement.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-moon text-lg';
+            }
+        });
+
+        // Mobile Nav Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Form Handler
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contactForm').reset();
+            const status = document.getElementById('formStatus');
+            status.classList.remove('hidden');
+            setTimeout(() => status.classList.add('hidden'), 4000);
+        }
+
+        // Game Tab Switcher
+        function switchGame(gameKey) {
+            // Hide all game panels
+            document.querySelectorAll('.game-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.game-tab').forEach(t => {
+                t.className = "game-tab px-5 py-2.5 rounded-xl font-mono text-sm font-semibold transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-2";
+            });
+
+            // Show target
+            document.getElementById(`game-${gameKey}`).classList.remove('hidden');
+            const activeTab = document.getElementById(`tab-${gameKey}`);
+            activeTab.className = "game-tab active px-5 py-2.5 rounded-xl font-mono text-sm font-semibold transition-all bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/30 flex items-center gap-2";
+
+            // Pause running games
+            stopSnake();
+            stopBreakout();
+
+            if(gameKey === 'memory') {
+                initMemoryGame();
+            }
+        }
+
+        // --- 2. SNAKE GAME LOGIC ---
+        const snakeCanvas = document.getElementById('snakeCanvas');
+        const snakeCtx = snakeCanvas.getContext('2d');
+        const gridSize = 20;
+        const tileCount = 20;
+        
+        let snake = [];
+        let food = { x: 5, y: 5 };
+        let dx = gridSize;
+        let dy = 0;
+        let snakeScore = 0;
+        let snakeHighScore = 0;
+        let snakeGameLoop = null;
+        let snakeChangingDirection = false;
+
+        function startSnake() {
+            document.getElementById('snake-overlay').classList.add('hidden');
+            snake = [{ x: 10 * gridSize, y: 10 * gridSize }];
+            snakeScore = 0;
+            dx = gridSize;
+            dy = 0;
+            document.getElementById('snake-score').innerText = snakeScore;
+            spawnFood();
+            if (snakeGameLoop) clearInterval(snakeGameLoop);
+            snakeGameLoop = setInterval(runSnake, 100);
+        }
+
+        function stopSnake() {
+            if (snakeGameLoop) clearInterval(snakeGameLoop);
+        }
+
+        function spawnFood() {
+            food.x = Math.floor(Math.random() * tileCount) * gridSize;
+            food.y = Math.floor(Math.random() * tileCount) * gridSize;
+        }
+
+        function runSnake() {
+            if (hasSnakeEnded()) {
+                clearInterval(snakeGameLoop);
+                document.getElementById('snake-title').innerText = "GAME OVER";
+                document.getElementById('snake-desc').innerText = `Final Score: ${snakeScore}`;
+                document.getElementById('snake-overlay').classList.remove('hidden');
+                return;
+            }
+
+            snakeChangingDirection = false;
+            snakeCtx.fillStyle = '#0f172a';
+            snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+
+            // Draw Food
+            snakeCtx.fillStyle = '#ec4899';
+            snakeCtx.shadowColor = '#ec4899';
+            snakeCtx.shadowBlur = 8;
+            snakeCtx.fillRect(food.x, food.y, gridSize - 2, gridSize - 2);
+            snakeCtx.shadowBlur = 0;
+
+            // Move Head
+            const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+            snake.unshift(head);
+
+            // Check Eat
+            if (head.x === food.x && head.y === food.y) {
+                snakeScore += 10;
+                document.getElementById('snake-score').innerText = snakeScore;
+                if (snakeScore > snakeHighScore) {
+                    snakeHighScore = snakeScore;
+                    document.getElementById('snake-highscore').innerText = snakeHighScore;
+                }
+                spawnFood();
+            } else {
+                snake.pop();
+            }
+
+            // Draw Snake
+            snake.forEach((part, index) => {
+                snakeCtx.fillStyle = index === 0 ? '#00ffcc' : '#06b6d4';
+                snakeCtx.fillRect(part.x, part.y, gridSize - 2, gridSize - 2);
+            });
+        }
+
+        function hasSnakeEnded() {
+            for (let i = 4; i < snake.length; i++) {
+                if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true;
+            }
+            const hitLeft = snake[0].x < 0;
+            const hitRight = snake[0].x >= snakeCanvas.width;
+            const hitTop = snake[0].y < 0;
+            const hitBottom = snake[0].y >= snakeCanvas.height;
+            return hitLeft || hitRight || hitTop || hitBottom;
+        }
+
+        function handleSnakeDir(dir) {
+            if (snakeChangingDirection) return;
+            snakeChangingDirection = true;
+            if (dir === 'LEFT' && dx === 0) { dx = -gridSize; dy = 0; }
+            if (dir === 'UP' && dy === 0) { dx = 0; dy = -gridSize; }
+            if (dir === 'RIGHT' && dx === 0) { dx = gridSize; dy = 0; }
+            if (dir === 'DOWN' && dy === 0) { dx = 0; dy = gridSize; }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') handleSnakeDir('LEFT');
+            if (e.key === 'ArrowUp') handleSnakeDir('UP');
+            if (e.key === 'ArrowRight') handleSnakeDir('RIGHT');
+            if (e.key === 'ArrowDown') handleSnakeDir('DOWN');
+        });
+
+
+        // --- 3. BRICK BREAKER LOGIC ---
+        const boCanvas = document.getElementById('breakoutCanvas');
+        const boCtx = boCanvas.getContext('2d');
+        
+        let boPaddleWidth = 75;
+        let boPaddleHeight = 10;
+        let boPaddleX = (boCanvas.width - boPaddleWidth) / 2;
+        let boBallRadius = 6;
+        let boX = boCanvas.width / 2;
+        let boY = boCanvas.height - 30;
+        let boDx = 3;
+        let boDy = -3;
+        let boScore = 0;
+        let boLives = 3;
+        let boLoop = null;
+
+        const brickRowCount = 4;
+        const brickColumnCount = 6;
+        const brickWidth = 55;
+        const brickHeight = 15;
+        const brickPadding = 8;
+        const brickOffsetTop = 30;
+        const brickOffsetLeft = 15;
+        let bricks = [];
+
+        function initBricks() {
+            bricks = [];
+            for (let c = 0; c < brickColumnCount; c++) {
+                bricks[c] = [];
+                for (let r = 0; r < brickRowCount; r++) {
+                    bricks[c][r] = { x: 0, y: 0, status: 1 };
+                }
+            }
+        }
+
+        function startBreakout() {
+            document.getElementById('breakout-overlay').classList.add('hidden');
+            boScore = 0;
+            boLives = 3;
+            boX = boCanvas.width / 2;
+            boY = boCanvas.height - 30;
+            boDx = 3;
+            boDy = -3;
+            boPaddleX = (boCanvas.width - boPaddleWidth) / 2;
+            document.getElementById('breakout-score').innerText = boScore;
+            document.getElementById('breakout-lives').innerText = boLives;
+            initBricks();
+            if (boLoop) cancelAnimationFrame(boLoop);
+            drawBreakout();
+        }
+
+        function stopBreakout() {
+            if (boLoop) cancelAnimationFrame(boLoop);
+        }
+
+        function drawBreakoutBricks() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    if (bricks[c][r].status === 1) {
+                        const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+                        const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+                        bricks[c][r].x = brickX;
+                        bricks[c][r].y = brickY;
+                        boCtx.beginPath();
+                        boCtx.rect(brickX, brickY, brickWidth, brickHeight);
+                        boCtx.fillStyle = r % 2 === 0 ? '#06b6d4' : '#a855f7';
+                        boCtx.fill();
+                        boCtx.closePath();
+                    }
+                }
+            }
+        }
+
+        function breakoutCollision() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    const b = bricks[c][r];
+                    if (b.status === 1) {
+                        if (boX > b.x && boX < b.x + brickWidth && boY > b.y && boY < b.y + brickHeight) {
+                            boDy = -boDy;
+                            b.status = 0;
+                            boScore += 10;
+                            document.getElementById('breakout-score').innerText = boScore;
+                            if (boScore === brickRowCount * brickColumnCount * 10) {
+                                document.getElementById('breakout-title').innerText = "YOU WIN!";
+                                document.getElementById('breakout-desc').innerText = "Awesome job clearing all bricks!";
+                                document.getElementById('breakout-overlay').classList.remove('hidden');
+                                cancelAnimationFrame(boLoop);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        let rightPressed = false;
+        let leftPressed = false;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Right' || e.key === 'ArrowRight') rightPressed = true;
+            if (e.key === 'Left' || e.key === 'ArrowLeft') leftPressed = true;
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'Right' || e.key === 'ArrowRight') rightPressed = false;
+            if (e.key === 'Left' || e.key === 'ArrowLeft') leftPressed = false;
+        });
+
+        // Touch Control Listeners
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+        btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); leftPressed = true; });
+        btnLeft.addEventListener('touchend', (e) => { e.preventDefault(); leftPressed = false; });
+        btnRight.addEventListener('touchstart', (e) => { e.preventDefault(); rightPressed = true; });
+        btnRight.addEventListener('touchend', (e) => { e.preventDefault(); rightPressed = false; });
+
+        function drawBreakout() {
+            boCtx.clearRect(0, 0, boCanvas.width, boCanvas.height);
+            drawBreakoutBricks();
+
+            // Draw Ball
+            boCtx.beginPath();
+            boCtx.arc(boX, boY, boBallRadius, 0, Math.PI * 2);
+            boCtx.fillStyle = '#00ffcc';
+            boCtx.fill();
+            boCtx.closePath();
+
+            // Draw Paddle
+            boCtx.beginPath();
+            boCtx.rect(boPaddleX, boCanvas.height - boPaddleHeight, boPaddleWidth, boPaddleHeight);
+            boCtx.fillStyle = '#ffffff';
+            boCtx.fill();
+            boCtx.closePath();
+
+            breakoutCollision();
+
+            // Bounce off left/right
+            if (boX + boDx > boCanvas.width - boBallRadius || boX + boDx < boBallRadius) {
+                boDx = -boDx;
+            }
+            // Bounce off top
+            if (boY + boDy < boBallRadius) {
+                boDy = -boDy;
+            } else if (boY + boDy > boCanvas.height - boBallRadius) {
+                if (boX > boPaddleX && boX < boPaddleX + boPaddleWidth) {
+                    boDy = -boDy;
+                } else {
+                    boLives--;
+                    document.getElementById('breakout-lives').innerText = boLives;
+                    if (!boLives) {
+                        document.getElementById('breakout-title').innerText = "GAME OVER";
+                        document.getElementById('breakout-desc').innerText = `Final Score: ${boScore}`;
+                        document.getElementById('breakout-overlay').classList.remove('hidden');
+                        return;
+                    } else {
+                        boX = boCanvas.width / 2;
+                        boY = boCanvas.height - 30;
+                        boDx = 3;
+                        boDy = -3;
+                        boPaddleX = (boCanvas.width - boPaddleWidth) / 2;
+                    }
+                }
+            }
+
+            if (rightPressed && boPaddleX < boCanvas.width - boPaddleWidth) boPaddleX += 5;
+            if (leftPressed && boPaddleX > 0) boPaddleX -= 5;
+
+            boX += boDx;
+            boY += boDy;
+            boLoop = requestAnimationFrame(drawBreakout);
+        }
+
+
+        // --- 4. MEMORY MATCH GAME LOGIC ---
+        const icons = ['fa-gamepad', 'fa-ghost', 'fa-rocket', 'fa-bolt', 'fa-code', 'fa-crown'];
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedCount = 0;
+        let moves = 0;
+
+        function initMemoryGame() {
+            moves = 0;
+            matchedCount = 0;
+            document.getElementById('memory-moves').innerText = moves;
+            
+            // Duplicate & shuffle icons
+            const deck = [...icons, ...icons].sort(() => 0.5 - Math.random());
+            const grid = document.getElementById('memory-grid');
+            grid.innerHTML = '';
+
+            deck.forEach((icon, idx) => {
+                const card = document.createElement('div');
+                card.className = "card bg-slate-800 rounded-xl h-20 flex items-center justify-center cursor-pointer border border-slate-700 hover:border-cyan-500 transition-all text-2xl text-slate-800";
+                card.dataset.icon = icon;
+                card.dataset.index = idx;
+                card.innerHTML = `<i class="fa-solid ${icon} opacity-0 transition-opacity"></i>`;
+                card.addEventListener('click', () => handleCardClick(card));
+                grid.appendChild(card);
+            });
+            flippedCards = [];
+        }
+
+        function handleCardClick(card) {
+            if (flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+            card.classList.add('flipped', 'bg-cyan-500/20', 'border-cyan-500');
+            card.querySelector('i').classList.remove('opacity-0');
+            card.querySelector('i').classList.add('text-cyan-400');
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('memory-moves').innerText = moves;
+                checkMemoryMatch();
+            }
+        }
+
+        function checkMemoryMatch() {
+            const [c1, c2] = flippedCards;
+            if (c1.dataset.icon === c2.dataset.icon) {
+                c1.classList.add('matched');
+                c2.classList.add('matched');
+                matchedCount += 2;
+                flippedCards = [];
+                if (matchedCount === icons.length * 2) {
+                    setTimeout(() => alert(`Congratulations! You cleared Memory Match in ${moves} moves!`), 200);
+                }
+            } else {
+                setTimeout(() => {
+                    c1.classList.remove('flipped', 'bg-cyan-500/20', 'border-cyan-500');
+                    c1.querySelector('i').classList.add('opacity-0');
+                    c2.classList.remove('flipped', 'bg-cyan-500/20', 'border-cyan-500');
+                    c2.querySelector('i').classList.add('opacity-0');
+                    flippedCards = [];
+                }, 800);
+            }
+        }
+
+        // Initialize Memory game on load
+        window.onload = function() {
+            initMemoryGame();
+        };
+    </script>
+</body>
+</html>
