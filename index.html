@@ -61,7 +61,37 @@
         .game-canvas {
             image-rendering: pixelated;
         }
-    </style>
+            /* Urban Tech: deep graphite, signal orange and precision grid */
+        :root { color-scheme: dark; --urban-bg:#090b10; --urban-panel:#11151c; --urban-panel-2:#171c24; --urban-line:#29313c; --urban-text:#e8edf3; --urban-muted:#98a3b2; --urban-accent:#ff6b35; --urban-lime:#c7f36b; }
+        html { background:var(--urban-bg); scroll-padding-top:5rem; }
+        body { background:var(--urban-bg)!important; color:var(--urban-text)!important; }
+        header { background:rgba(9,11,16,.88)!important; border-color:var(--urban-line)!important; }
+        .arcade-grid { background-color:var(--urban-bg); background-image:linear-gradient(rgba(255,107,53,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,53,.055) 1px,transparent 1px),radial-gradient(ellipse at 75% 40%,rgba(255,107,53,.14),transparent 42%)!important; background-size:34px 34px,34px 34px,auto!important; }
+        h1,h2,h3 { color:#f4f6f8; letter-spacing:-.035em; }
+        h1 { text-wrap:balance; }
+        .text-cyan-600,.text-cyan-500,.dark .text-cyan-400,.dark .text-cyan-600 { color:var(--urban-accent)!important; }
+        .hover\:text-cyan-500:hover,.group:hover .group-hover\:text-cyan-500 { color:var(--urban-lime)!important; }
+        .bg-cyan-500 { background-color:var(--urban-accent)!important; }
+        .hover\:bg-cyan-600:hover { background-color:#e95725!important; }
+        .border-cyan-500,.border-cyan-500\/20,.border-cyan-500\/30 { border-color:rgba(255,107,53,.38)!important; }
+        .bg-cyan-500\/10 { background-color:rgba(255,107,53,.10)!important; }
+        .bg-cyan-500\/20 { background-color:rgba(255,107,53,.18)!important; }
+        .shadow-cyan-500\/25 { --tw-shadow-color:rgba(255,107,53,.26)!important; }
+        .bg-slate-950,.dark .bg-slate-950 { background-color:var(--urban-bg)!important; }
+        .bg-white,.dark .bg-slate-900,.dark .bg-slate-900\/50 { background-color:var(--urban-panel)!important; }
+        .bg-slate-50,.bg-slate-100,.dark .bg-slate-800,.dark .bg-slate-800\/50 { background-color:var(--urban-panel-2)!important; }
+        .border-slate-200,.dark .border-slate-800,.dark .border-slate-700,.dark .border-slate-700\/50 { border-color:var(--urban-line)!important; }
+        .text-slate-800,.dark .text-slate-100,.dark .text-slate-200 { color:var(--urban-text)!important; }
+        .text-slate-500,.text-slate-600,.dark .text-slate-300,.dark .text-slate-400 { color:var(--urban-muted)!important; }
+        section:not(#hero) h2+div { background:var(--urban-accent)!important; box-shadow:0 0 16px rgba(255,107,53,.45); }
+        #about>div>div:last-child>div,#skills .grid>div,#projects .grid>div,#arcade .grid>div,#contact form,#hero .relative.w-full { border-color:var(--urban-line)!important; box-shadow:0 16px 44px rgba(0,0,0,.22); }
+        #about>div>div:last-child>div:hover,#skills .grid>div:hover,#projects .grid>div:hover { border-color:rgba(255,107,53,.5)!important; transform:translateY(-3px); transition:.2s ease; }
+        input,textarea,select { background:#0c1016!important; color:var(--urban-text)!important; border-color:var(--urban-line)!important; }
+        input:focus,textarea:focus,select:focus { outline:2px solid rgba(255,107,53,.45); outline-offset:1px; }
+        footer { background:#07090d!important; border-color:var(--urban-line)!important; }
+        ::selection { background:var(--urban-accent); color:#090b10; }
+        @media(max-width:640px) { .arcade-grid { background-size:28px 28px,28px 28px,auto!important; } }
+</style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
 
